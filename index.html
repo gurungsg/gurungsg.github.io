@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Samarpan Gurung Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: case-file portfolio. Left-aligned hero with a profile summary card, then skills, case-file cards, record ledger, contact. */
+:root {
+  --bg: #EDF0F3;
+  --surface: #F8FAFB;
+  --ink: #0F1B2D;
+  --muted: #53627A;
+  --line: #CBD3DD;
+  --accent: #0A7B83;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #D3ECEE;
+  --ok: #17803D;
+  --ph-bg: #FFF1C2;
+  --ph-ink: #5C4300;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1420;
+    --surface: #131E2E;
+    --ink: #E7EDF5;
+    --muted: #93A3BA;
+    --line: #263447;
+    --accent: #4FD1C5;
+    --accent-ink: #05211F;
+    --accent-soft: #12323A;
+    --ok: #4ADE80;
+    --ph-bg: #3A2F0B;
+    --ph-ink: #FFD978;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1420;
+  --surface: #131E2E;
+  --ink: #E7EDF5;
+  --muted: #93A3BA;
+  --line: #263447;
+  --accent: #4FD1C5;
+  --accent-ink: #05211F;
+  --accent-soft: #12323A;
+  --ok: #4ADE80;
+  --ph-bg: #3A2F0B;
+  --ph-ink: #FFD978;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.1; letter-spacing: -0.015em; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Placeholder markers: anything yellow is a stand-in to replace with real details */
+.ph {
+  background: var(--ph-bg);
+  color: var(--ph-ink);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+/* Notice bar */
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.notice > span { min-width: 0; }
+.notice button {
+  flex: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 2px 10px;
+  cursor: pointer;
+}
+
+/* Top bar */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding-block: 28px 0;
+}
+.brand { font-family: var(--font-mono); font-size: 14px; font-weight: 500; letter-spacing: 0.02em; }
+.brand b { color: var(--accent); font-weight: 500; }
+.nav { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 14px; }
+.nav a { color: var(--muted); text-decoration: none; padding: 2px 0; }
+.nav a:hover { color: var(--ink); }
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 40px 56px;
+  align-items: center;
+  padding-block: 72px 80px;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  margin-bottom: 24px;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+.hero h1 { font-size: clamp(2.5rem, 6.4vw, 4.5rem); font-weight: 700; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.spec { margin-top: 20px; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.role { margin-top: 12px; font-size: 1.15rem; color: var(--muted); max-width: 34em; }
+.role strong { color: var(--ink); font-weight: 600; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-block;
+  font: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 11px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  cursor: pointer;
+}
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn:hover { filter: brightness(1.08); }
+
+.triage {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  min-width: 0;
+  overflow: hidden;
+  margin: 0;
+}
+.triage header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.triage dl { margin: 0; padding: 8px 16px 14px; font-family: var(--font-mono); font-size: 13px; }
+.triage .row { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: 12px; padding: 7px 0; border-bottom: 1px dashed var(--line); }
+.triage .row:last-child { border-bottom: 0; }
+.triage dt { color: var(--muted); }
+.triage dd { margin: 0; overflow-wrap: anywhere; }
+.verdict { color: var(--ok); font-weight: 500; }
+
+/* Highlights */
+.proof { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); border-top: 1px solid var(--line); }
+.proof > div { display: flex; flex-direction: column; gap: 2px; padding: 24px 24px 24px 0; }
+.proof b { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; letter-spacing: -0.015em; line-height: 1.15; }
+.proof span { color: var(--muted); font-size: 14px; }
+
+/* About */
+.about p { max-width: 38em; font-size: 1.12rem; line-height: 1.7; }
+.about p + p { margin-top: 16px; }
+
+/* Back to top */
+.totop {
+  position: fixed;
+  right: calc(16px + env(safe-area-inset-right, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 20;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+.totop:hover { filter: brightness(1.1); }
+.totop svg { width: 22px; height: 22px; display: block; }
+
+/* Sections */
+section { padding-block: 64px; border-top: 1px solid var(--line); }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin-bottom: 36px; }
+.sec-head h2 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); font-weight: 700; }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px 40px; }
+.skills h3 { font-size: 1rem; font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.04em; margin-bottom: 14px; color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { font-size: 14px; padding: 4px 11px; border: 1px solid var(--line); background: var(--surface); border-radius: 4px; }
+
+/* Coursework */
+.courses { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px 40px; }
+.courses h3 { font-size: 1rem; font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.04em; margin-bottom: 8px; color: var(--accent); }
+.courses li { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px dashed var(--line); font-size: 15px; }
+.courses li:last-child { border-bottom: 0; }
+.courses li span:first-child { min-width: 0; }
+.grade { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ok); flex: none; }
+.course-note { margin-top: 24px; font-size: 14px; color: var(--muted); }
+
+/* Case files */
+.cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 20px; }
+.case {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  min-width: 0;
+}
+.case-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.case-id { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; color: var(--muted); }
+.tag { font-family: var(--font-mono); font-size: 11.5px; padding: 2px 9px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
+.case h3 { font-size: 1.4rem; font-weight: 650; }
+.case p { color: var(--muted); font-size: 15px; }
+.case dl { margin: auto 0 0; display: grid; gap: 10px; padding-top: 16px; border-top: 1px dashed var(--line); }
+.case dl > div { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: 12px; font-size: 14px; }
+.case dt { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+.case dd { margin: 0; overflow-wrap: anywhere; }
+.group-note { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; }
+.cases + .group-note { margin-top: 40px; }
+.practice { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 16px 20px; border: 1px dashed var(--line); border-radius: 6px; font-size: 15px; color: var(--muted); }
+.practice b { font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); }
+
+/* Ledger */
+.ledger { display: grid; gap: 0; }
+.entry { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 8px 32px; padding-block: 24px; border-bottom: 1px solid var(--line); }
+.entry:first-child { padding-top: 0; }
+.entry:last-child { border-bottom: 0; padding-bottom: 0; }
+.when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 4px; }
+.entry h3 { font-size: 1.25rem; font-weight: 650; }
+.where { color: var(--muted); font-size: 15px; margin-top: 2px; }
+.entry ul { margin-top: 12px; display: grid; gap: 8px; }
+.entry li { position: relative; padding-left: 18px; font-size: 15px; }
+.entry li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 8px; height: 1px; background: var(--accent); }
+
+/* Contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 56px; align-items: start; }
+.contact h2 { font-size: clamp(1.9rem, 4.4vw, 3rem); font-weight: 700; }
+.contact p.lede { margin-top: 16px; color: var(--muted); max-width: 30em; }
+.channels { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+.channel { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--line); font-size: 15px; }
+.channel:last-child { border-bottom: 0; }
+.channel .k { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.channel .v { min-width: 0; overflow-wrap: anywhere; }
+.copy {
+  font: inherit; font-size: 13px; color: var(--ink); background: transparent;
+  border: 1px solid var(--line); border-radius: 4px; padding: 3px 10px; cursor: pointer;
+}
+.copy:hover { border-color: var(--accent); }
+footer { padding-block: 28px 40px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: 13px; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); padding-block: 48px 56px; }
+  .contact { grid-template-columns: minmax(0, 1fr); }
+  .entry { grid-template-columns: minmax(0, 1fr); }
+  section { padding-block: 48px; }
+}
+@media (max-width: 480px) {
+  .channel { grid-template-columns: minmax(0, 1fr) auto; }
+  .channel .k { grid-column: 1 / -1; }
+  .case { padding: 20px; }
+}
+
+body{margin:0}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><b>&gt;</b> samarpan.gurung</div>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#coursework">Coursework</a>
+      <a href="#certificates">Certificates</a>
+      <a href="#cases">Case files</a>
+      <a href="#record">Record</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <div class="status"><span class="dot" aria-hidden="true"></span><span>Seeking Spring or Summer 2027 co-op · on-site or remote</span></div>
+        <h1>Samarpan Gurung<br>keeps data accurate and <em>secure</em>.</h1>
+        <p class="spec">Cybersecurity · Data Technologies · Networking · Databases &amp; SQL</p>
+        <p class="role">Cybersecurity and Data Technologies student at the <strong>University of Cincinnati</strong> with a 3.48 GPA and four Dean's List terms. As an IT teaching assistant I mentored about 35 high school students per camp. I am seeking a <strong>Spring or Summer 2027 co-op</strong> where I can apply my database, networking and security skills.</p>
+        <div class="cta">
+          <a class="btn" href="#cases">See my case files</a>
+          <a class="btn ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+
+      <figure class="triage">
+        <header><span>Profile summary</span><span>Status: Open</span></header>
+        <dl>
+          <div class="row"><dt>school</dt><dd>University of Cincinnati</dd></div>
+          <div class="row"><dt>degree</dt><dd>B.S. Cybersecurity</dd></div>
+          <div class="row"><dt>track</dt><dd>Data Technologies (second track)</dd></div>
+          <div class="row"><dt>gpa</dt><dd>3.48 (83 credit hours earned)</dd></div>
+          <div class="row"><dt>grad</dt><dd>May 2028</dd></div>
+          <div class="row"><dt>honors</dt><dd>Dean's List (4 terms) · UC Global and International Outreach scholarships</dd></div>
+          <div class="row"><dt>status</dt><dd class="verdict">OPEN TO WORK</dd></div>
+        </dl>
+      </figure>
+    </div>
+
+    <div class="proof">
+      <div><b>6 A's</b><span>in data and database courses</span></div>
+      <div><b>35 students</b><span>mentored per camp as an IT teaching assistant</span></div>
+      <div><b>Dean's List</b><span>in four terms at the University of Cincinnati</span></div>
+    </div>
+
+    <section id="about" class="about" aria-labelledby="about-h">
+      <div class="sec-head">
+        <h2 id="about-h">About me</h2>
+        <span class="eyebrow">Introduction</span>
+      </div>
+      <p>I'm a cybersecurity student at the University of Cincinnati with a track in data technologies. My coursework has focused on databases, SQL, Python and network security, and I have earned A's in most of my data courses.</p>
+      <p>Outside class, I have mentored high school students at IT summer camps, led a Capture the Flag challenge and volunteered serving meals in my community. Those roles taught me to be reliable, explain technical ideas clearly and work well with a team.</p>
+      <p>I am seeking a Spring or Summer 2027 co-op where I can put my data and security skills to work and keep learning on the job.</p>
+    </section>
+
+    <section id="skills" aria-labelledby="skills-h">
+      <div class="sec-head">
+        <h2 id="skills-h">What I can do on day one</h2>
+        <span class="eyebrow">Skills</span>
+      </div>
+      <div class="skills">
+        <div>
+          <h3>Data &amp; office</h3>
+          <ul class="chips">
+            <li>Microsoft Excel</li><li>Word &amp; PowerPoint</li><li>SQL</li><li>Database management</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Programming &amp; tools</h3>
+          <ul class="chips">
+            <li>Python</li><li>Java (OOP, GUI, file I/O, unit testing)</li><li>GitHub (branches, pull requests)</li><li>NetBeans</li><li>IntelliJ</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Security &amp; networking</h3>
+          <ul class="chips">
+            <li>Network security</li><li>Risk assessment</li><li>Incident response</li><li>Security compliance</li><li>Cryptography principles</li><li>Wireshark</li><li>Cisco Packet Tracer</li><li>Visio</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Systems administration</h3>
+          <ul class="chips">
+            <li>Command line</li><li>Directory services</li><li>Server management</li><li>File &amp; print services</li><li>User &amp; client services</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="coursework" aria-labelledby="coursework-h">
+      <div class="sec-head">
+        <h2 id="coursework-h">Grades that back it up</h2>
+        <span class="eyebrow">Selected coursework</span>
+      </div>
+      <div class="courses">
+        <div>
+          <h3>Data &amp; databases</h3>
+          <ul>
+            <li><span>Database Management I</span><span class="grade">A</span></li>
+            <li><span>Database Management II</span><span class="grade">A</span></li>
+            <li><span>Contemporary Database Systems</span><span class="grade">A</span></li>
+            <li><span>Data Tech Essentials</span><span class="grade">A</span></li>
+            <li><span>Data Tech Programming</span><span class="grade">A</span></li>
+            <li><span>Applied Statistics</span><span class="grade">A</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Code, network &amp; security</h3>
+          <ul>
+            <li><span>Computer Programming I</span><span class="grade">A</span></li>
+            <li><span>Computer Programming II</span><span class="grade">A-</span></li>
+            <li><span>Computer Networking</span><span class="grade">A</span></li>
+            <li><span>Information Security &amp; Assurance</span><span class="grade">A</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Systems &amp; design</h3>
+          <ul>
+            <li><span>System Analysis &amp; Design</span><span class="grade">A</span></li>
+            <li><span>Management in IT</span><span class="grade">A</span></li>
+            <li><span>Human Computer Interaction</span><span class="grade">A</span></li>
+            <li><span>Implications of IT</span><span class="grade">A</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="course-note">Selected A-range courses. Cumulative GPA 3.48 across 83 earned credit hours as of November 2026. Full transcript available on request.</p>
+    </section>
+
+    <section id="certificates" aria-labelledby="certificates-h">
+      <div class="sec-head">
+        <h2 id="certificates-h">Certificates</h2>
+        <span class="eyebrow">14 completed · LinkedIn Learning</span>
+      </div>
+      <div class="skills">
+        <div>
+          <h3>Security foundations</h3>
+          <ul class="chips">
+            <li>Become an IT Security Specialist</li><li>Cybersecurity Foundations</li><li>IT Security Foundations: Core Concepts</li><li>IT Security Foundations: Network Security</li><li>IT Security Foundations: Operating System Security</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Applied security</h3>
+          <ul class="chips">
+            <li>Cybersecurity Foundations: Computer Forensics</li><li>Learning Threat Modeling for Security Professionals</li><li>Vulnerability Management in Cybersecurity: The Basics</li><li>Cybersecurity with Cloud Computing</li><li>SSL/TLS for Beginners: Securing Network Communications</li><li>Artificial Intelligence for Cybersecurity</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Professional skills</h3>
+          <ul class="chips">
+            <li>Ethics in Information Security</li><li>Soft Skills for Cybersecurity Professionals</li><li>Java: Practice Unit Testing</li>
+          </ul>
+        </div>
+      </div>
+      <p class="course-note">Course certificates issued by LinkedIn Learning, June 2024, except Java: Practice Unit Testing (May 2025).</p>
+    </section>
+
+    <section id="cases" aria-labelledby="cases-h">
+      <div class="sec-head">
+        <h2 id="cases-h">Case files</h2>
+        <span class="eyebrow">Projects and hands-on work</span>
+      </div>
+      <p class="group-note">Projects and Java coursework · code is public on GitHub</p>
+      <div class="cases">
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-01</span><span class="tag">Data quality</span></div>
+          <h3>Data Quality Checker</h3>
+          <p>A Python command-line tool that scans a CSV file and reports bad records: missing values, duplicate rows and IDs, invalid emails and dates, and out-of-range numbers. It prints a summary and can save the issue list to a report file.</p>
+          <dl>
+            <div><dt>Tools</dt><dd>Python, CSV, unit tests, GitHub</dd></div>
+            <div><dt>Focus</dt><dd>Data accuracy, validation, reporting</dd></div>
+            <div><dt>Code</dt><dd><a href="https://github.com/gurungsg/data-quality-checker">data-quality-checker</a></dd></div>
+          </dl>
+        </article>
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-02</span><span class="tag">Programming</span></div>
+          <h3>Battleship game in Java</h3>
+          <p>A Battleship game organized into separate classes for the board, cells, ships and ship placement, with a game controller, a graphical interface, score tracking and an automated test class.</p>
+          <dl><div><dt>Tools</dt><dd>Java, GitHub</dd></div><div><dt>Focus</dt><dd>Object-oriented design, GUI, automated testing</dd></div><div><dt>Code</dt><dd><a href="https://github.com/gurungsg/7">7</a></dd></div></dl>
+        </article>
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-03</span><span class="tag">Programming</span></div>
+          <h3>Tic-Tac-Toe, from classes to GUI</h3>
+          <p>Built Tic-Tac-Toe three ways: separate board, tile and game classes, a single-file version, and a windowed version with its own frame and runner class.</p>
+          <dl><div><dt>Tools</dt><dd>Java, GitHub</dd></div><div><dt>Focus</dt><dd>Object-oriented design, GUI</dd></div><div><dt>Code</dt><dd><a href="https://github.com/gurungsg/Lab-07B-SE-Camp-OOP-TicTacToe">Lab-07B-SE-Camp-OOP-TicTacToe</a>, <a href="https://github.com/gurungsg/ASS-01">ASS-01</a>, <a href="https://github.com/gurungsg/LAB-10">LAB-10</a></dd></div></dl>
+        </article>
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-04</span><span class="tag">Data</span></div>
+          <h3>File and data processing in Java</h3>
+          <p>Programs that read, write and search data files: a tag extractor that counts keyword frequency and filters stop words, random-access product records in a .dat file, CSV saving, a command-line file scanner and data-stream readers.</p>
+          <dl><div><dt>Tools</dt><dd>Java, CSV and text files</dd></div><div><dt>Focus</dt><dd>File I/O, data parsing, searching</dd></div><div><dt>Code</dt><dd><a href="https://github.com/gurungsg/Lab-8-TAG">Lab-8-TAG</a>, <a href="https://github.com/gurungsg/File-streams">File-streams</a>, <a href="https://github.com/gurungsg/Lab-14-CMD">Lab-14-CMD</a>, <a href="https://github.com/gurungsg/Lab-12">Lab-12</a>, <a href="https://github.com/gurungsg/Lab-13">Lab-13</a>, <a href="https://github.com/gurungsg/Lab-9-Data-streams">Lab-9-Data-streams</a>, <a href="https://github.com/gurungsg/Lab-data-streams">Lab-data-streams</a></dd></div></dl>
+        </article>
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-05</span><span class="tag">Data</span></div>
+          <h3>Invoice and records system</h3>
+          <p>An invoice model split into invoice, address, line item and product classes, plus person and product record programs that generate, read and write data files. A shared SafeInput class validates user input across the projects.</p>
+          <dl><div><dt>Tools</dt><dd>Java, GitHub</dd></div><div><dt>Focus</dt><dd>Data modeling, input validation, record handling</dd></div><div><dt>Code</dt><dd><a href="https://github.com/gurungsg/Lab-7-SE">Lab-7-SE</a>, <a href="https://github.com/gurungsg/Lab-07ANSE">Lab-07ANSE</a>, <a href="https://github.com/gurungsg/Lab-1">Lab-1</a>, <a href="https://github.com/gurungsg/Lab-1-Get-classy">Lab-1-Get-classy</a>, <a href="https://github.com/gurungsg/Practicum">Practicum</a>, <a href="https://github.com/gurungsg/Practicum-II">Practicum-II</a></dd></div></dl>
+        </article>
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-06</span><span class="tag">Programming</span></div>
+          <h3>Desktop apps with a GUI</h3>
+          <p>Small windowed applications: a pizza order form, Rock Paper Scissors with image buttons, a fortune teller, a sorted-list tool and a list viewer.</p>
+          <dl><div><dt>Tools</dt><dd>Java</dd></div><div><dt>Focus</dt><dd>User interfaces, event handling, collections</dd></div><div><dt>Code</dt><dd><a href="https://github.com/gurungsg/Lab-6">Lab-6</a>, <a href="https://github.com/gurungsg/Rock-Lab-5">Rock-Lab-5</a>, <a href="https://github.com/gurungsg/Fortune-teller">Fortune-teller</a>, <a href="https://github.com/gurungsg/Lab-10-Sorted">Lab-10-Sorted</a>, <a href="https://github.com/gurungsg/11">11</a></dd></div></dl>
+        </article>
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-07</span><span class="tag">Programming</span></div>
+          <h3>Inheritance, interfaces and testing</h3>
+          <p>Worker and salaried-worker class hierarchies with unit tests for each class, plus reusable filter interfaces that pick out big rectangles and short words.</p>
+          <dl><div><dt>Tools</dt><dd>Java, unit testing</dd></div><div><dt>Focus</dt><dd>Inheritance, interfaces, test cases</dd></div><div><dt>Code</dt><dd><a href="https://github.com/gurungsg/Lab-2-Inherit-the-wind">Lab-2-Inherit-the-wind</a>, <a href="https://github.com/gurungsg/Inherit-the-wind-Lab-2">Inherit-the-wind-Lab-2</a>, <a href="https://github.com/gurungsg/Lab-3-Fall">Lab-3-Fall</a></dd></div></dl>
+        </article>
+      </div>
+      <p class="group-note">Security and mentoring · summer camps at the University of Cincinnati</p>
+      <div class="cases">
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-08</span><span class="tag">Security</span></div>
+          <h3>Capture the Flag challenge</h3>
+          <p>Led a Capture the Flag challenge for the Cybersecurity Camp, giving high school students a hands-on way to practice threat detection.</p>
+          <dl><div><dt>Role</dt><dd>IT Teaching Assistant, University of Cincinnati</dd></div><div><dt>Focus</dt><dd>Threat detection, problem solving</dd></div><div><dt>Scale</dt><dd>About 35 participants</dd></div></dl>
+        </article>
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-09</span><span class="tag">Networking</span></div>
+          <h3>Network security simulation</h3>
+          <p>Guided student teams through a simulated network defense exercise that covered threat detection and basic penetration testing.</p>
+          <dl><div><dt>Role</dt><dd>IT Teaching Assistant, University of Cincinnati</dd></div><div><dt>Focus</dt><dd>Network defense, penetration testing basics</dd></div><div><dt>Scale</dt><dd>7 groups of 5 students</dd></div></dl>
+        </article>
+        <article class="case">
+          <div class="case-top"><span class="case-id">CASE-10</span><span class="tag">Mentoring</span></div>
+          <h3>2D game and team showcase</h3>
+          <p>Directed student teams building a 2D interactive game in Unity, with a team presentation covering game mechanics, UI design and debugging.</p>
+          <dl><div><dt>Role</dt><dd>IT Teaching Assistant, University of Cincinnati</dd></div><div><dt>Tools</dt><dd>Unity</dd></div><div><dt>Scale</dt><dd>7 groups of 5 students</dd></div></dl>
+        </article>
+      </div>
+      <p class="practice"><b>More code</b><span>Browse more public repositories on <a href="https://github.com/gurungsg?tab=repositories">github.com/gurungsg</a>.</span></p>
+    </section>
+
+    <section id="record" aria-labelledby="record-h">
+      <div class="sec-head">
+        <h2 id="record-h">Record</h2>
+        <span class="eyebrow">Experience · education · honors</span>
+      </div>
+      <div class="ledger">
+        <div class="entry">
+          <div class="when">Aug 2025 – Present</div>
+          <div>
+            <h3>Desk Assistant</h3>
+            <p class="where">University of Cincinnati Housing Services · Part-time, on-site</p>
+            <ul>
+              <li>Provide front desk support for residential housing operations, assisting students, staff and visitors.</li>
+              <li>Help keep the residence hall safe and welcoming.</li>
+              <li>Use communication and time management every shift in a role I have held for over a year.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">June – July 2025</div>
+          <div>
+            <h3>IT Teaching Assistant</h3>
+            <p class="where">School of Information Technology, University of Cincinnati</p>
+            <ul>
+              <li>Supported two summer camps, Cybersecurity and Game Development, that introduce high school students to core IT concepts through project-based learning.</li>
+              <li>Mentored 7 student groups of 5 per camp, about 35 participants each.</li>
+              <li>Guided 2 major projects per camp, including a Capture the Flag challenge, a network security simulation, a 2D Unity game and a team presentation.</li>
+              <li>Worked with faculty and camp coordinators to keep the environment inclusive and engaging.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">Expected May 2028</div>
+          <div>
+            <h3>B.S. Cybersecurity</h3>
+            <p class="where">University of Cincinnati · Second track: IT Data Technologies · GPA 3.48</p>
+            <ul>
+              <li>Cumulative GPA 3.48 across 83 earned credit hours, with Dean's List in four terms.</li>
+              <li>In progress this semester: Senior Design Prep, Special Topics in Cybersecurity, Intro to Discrete Mathematics, Writing for Business, Fundamentals of Digital Media.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">Fall 2026 – Present</div>
+          <div>
+            <h3>Meal Service Volunteer</h3>
+            <p class="where">Saint Francis Seraph Ministries, Cincinnati</p>
+            <ul>
+              <li>Serve breakfast and dinner to guests at the Mother Teresa of Calcutta Dining Room.</li>
+              <li>Keep a steady volunteer schedule across breakfast and dinner shifts for several months.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">Nov – Dec 2024</div>
+          <div>
+            <h3>Customer Service Volunteer</h3>
+            <p class="where">Clifton Cultural Arts Center</p>
+            <ul>
+              <li>Gave front-line customer service at weekly community concerts, keeping the welcome desk organized for attendees.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">2024 – Present</div>
+          <div>
+            <h3>Honors</h3>
+            <ul>
+              <li>Dean's List: Summer 2024, Fall 2024, Spring 2025, Spring 2026</li>
+              <li>UC International Outreach Scholarship</li>
+              <li>UC Global Scholarship</li>
+            </ul>
+          </div>
+        </div>
+              </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-h">
+      <div class="contact">
+        <div>
+          <span class="eyebrow">Contact</span>
+          <h2 id="contact-h" style="margin-top:12px">Hiring for a Spring or Summer 2027 co-op?</h2>
+          <p class="lede">Resume and references are available on request. I am glad to talk through any project above.</p>
+        </div>
+        <div class="channels">
+          <div class="channel"><span class="k">Email</span><span class="v" id="email">gurungsg@mail.uc.edu</span><button type="button" class="copy" data-target="email">Copy</button></div>
+          <div class="channel"><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/gurungsamarpan0/" id="li">linkedin.com/in/gurungsamarpan0</a></span><button type="button" class="copy" data-target="li">Copy</button></div>
+                    <div class="channel"><span class="k">GitHub</span><span class="v"><a href="https://github.com/gurungsg" id="gh">github.com/gurungsg</a></span><button type="button" class="copy" data-target="gh">Copy</button></div>
+          <div class="channel"><span class="k">Location</span><span class="v">Cincinnati, Ohio · on-site or remote</span><span></span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Samarpan Gurung · Cybersecurity &amp; data</span>
+    <span>Last updated November 2026</span>
+  </footer>
+</div>
+
+<button type="button" id="totop" class="totop" aria-label="Back to top" title="Back to top" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+<script>
+(function () {
+  var btn = document.getElementById('totop');
+  function toggle() { btn.hidden = (window.scrollY || document.documentElement.scrollTop) < 400; }
+  window.addEventListener('scroll', toggle, { passive: true });
+  btn.addEventListener('click', function () {
+    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' });
+  });
+  toggle();
+})();
+</script>
+<script>
+(function () {
+  function fallbackSelect(el) {
+    var r = document.createRange();
+    r.selectNodeContents(el);
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
+  }
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.getAttribute('data-target'));
+      var text = el.textContent.trim();
+      var done = function () {
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+      };
+      try {
+        navigator.clipboard.writeText(text).then(done, function () { fallbackSelect(el); btn.textContent = 'Selected'; });
+      } catch (e) { fallbackSelect(el); btn.textContent = 'Selected'; }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
